@@ -1,0 +1,35 @@
+USE TEST
+GO
+CREATE TABLE f_Trans_GL(
+Name VARCHAR(50),
+Description VARCHAR(50),
+Dim0 INT)
+GO
+INSERT INTO f_Trans_GL VALUES('Chris', 'Point Guard', 3)
+INSERT INTO f_Trans_GL VALUES('Blake', 'Power forward', 20)
+INSERT INTO f_Trans_GL VALUES('Kobe', 'Point Guard', 8)
+INSERT INTO f_Trans_GL VALUES('Durant', 'Power forward', 35)
+INSERT INTO f_Trans_GL VALUES('Jeremy', 'Point Guard', 17)
+INSERT INTO f_Trans_GL VALUES('Bladsoe', 'Point Guard', 17)
+
+
+CREATE TABLE d_Dim0(
+Name VARCHAR(50),
+MemberID INT)
+GO
+INSERT INTO d_Dim0 VALUES('Chris', 3)
+INSERT INTO d_Dim0 VALUES('Blake', 20)
+INSERT INTO d_Dim0 VALUES('Kobe', 8)
+INSERT INTO d_Dim0 VALUES('Durant', 35)
+INSERT INTO d_Dim0 VALUES('Jeremy', 17)
+INSERT INTO d_Dim0 VALUES('Barnes', 18)
+INSERT INTO d_Dim0 VALUES('T-Mac', 1)
+INSERT INTO d_Dim0 VALUES('Rondo', 2)
+INSERT INTO d_Dim0 VALUES('Rechard', 4)
+INSERT INTO d_Dim0 VALUES('Flan', 9)
+INSERT INTO d_Dim0 VALUES('Matt', 7)
+INSERT INTO d_Dim0 VALUES('Terry', 11)
+INSERT INTO d_Dim0 VALUES('Martin', 12)
+
+SELECT * FROM f_Trans_GL
+SELECT * FROM d_Dim0
