@@ -1,5 +1,7 @@
 USE TEST
 GO
+IF OBJECT_ID('f_Trans_GL') IS NOT NULL
+DROP TABLE f_Trans_GL
 CREATE TABLE f_Trans_GL(
 Name VARCHAR(50),
 Description VARCHAR(50),
@@ -12,7 +14,8 @@ INSERT INTO f_Trans_GL VALUES('Durant', 'Power forward', 35)
 INSERT INTO f_Trans_GL VALUES('Jeremy', 'Point Guard', 17)
 INSERT INTO f_Trans_GL VALUES('Bladsoe', 'Point Guard', 17)
 
-
+IF OBJECT_ID('d_Dim0') IS NOT NULL
+DROP TABLE d_Dim0
 CREATE TABLE d_Dim0(
 Name VARCHAR(50),
 MemberID INT)
