@@ -1,0 +1,26 @@
+USE BI360DW_V4
+GO
+
+DECLARE @SpecID  TABLE (id INT IDENTITY(1,1), MemberID INT)
+DECLARE @f_trans TABLE (fid INT IDENTITY(1,1), Dim0 INT)
+INSERT INTO @SpecID (MemberID)
+SELECT DISTINCT MemberID FROM d_Dim0
+WHERE MemberID NOT IN (SELECT DISTINCT Dim0 FROM f_Trans_GL)
+INSERT INTO @f_Trans
+SELECT DISTINCT Dim0 FROM f_Trans_GL
+
+BEGIN TRAN Tran_Update
+DECLARE @id INT
+SET @id = 1
+WHILE @id <= (SELECT MAX(fid) FROM @f_trans)
+BEGIN
+	UPDATE f_Trans_GL
+	SET Dim0 = (SELECT MemberID FROM @SpecID WHERE id = @id)
+	WHERE Dim0 = (SELECT Dim0 FROM @f_trans WHERE fid= @id)
+	SET @id = @id + 1
+END
+
+ROLLBACK TRAN Tran_Update
+COMMIT
+
+SELECT * FROM f_Trans_GL
