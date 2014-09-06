@@ -1,21 +1,31 @@
-USE BI360DW_4
+USE TEST
 GO
+
+--Create testing table from original data.
 SELECT * INTO #f_Trans_GL1 FROM f_Trans_GL
+
+--Collect idle member IDs.
 DECLARE @SpecID  TABLE (id INT IDENTITY(1,1), MemberID INT)
 INSERT INTO @SpecID (MemberID)
 SELECT DISTINCT MemberID FROM d_Dim0
 WHERE MemberID NOT IN (SELECT DISTINCT Dim0 FROM f_Trans_GL)
+
+--Collect distinct Dim0 values.
 DECLARE @f_trans TABLE (fid INT IDENTITY(1,1), Dim0 INT)
 INSERT INTO @f_Trans
 SELECT DISTINCT Dim0 FROM f_Trans_GL
+
+--Update values of Dim0 in the new records.
 DECLARE @id INT
 SET @id = 1
 WHILE @id <= (SELECT MAX(fid) FROM @f_trans)
 BEGIN
-  UPDATE #f_Trans_GL1
-  SET Dim0 = (SELECT MemberID FROM @SpecID WHERE id = @id)
-  WHERE Dim0 = (SELECT Dim0 FROM @f_trans WHERE fid= @id)
-  SET @id = @id + 1
+UPDATE #f_Trans_GL1
+SET Dim0 = (SELECT MemberID FROM @SpecID WHERE id = @id)
+WHERE Dim0 = (SELECT Dim0 FROM @f_trans WHERE fid= @id)
+SET @id = @id + 1
 END
+
+--Check the results and clean up.
 SELECT * FROM #f_Trans_GL1
 DROP TABLE #f_Trans_GL1
